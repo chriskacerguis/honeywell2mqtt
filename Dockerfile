@@ -7,7 +7,7 @@
 FROM alpine:3.6
 MAINTAINER Chris Kacerguis
 
-LABEL Description="This image is used to start a script that will monitor for events on 345.00 Mhz"
+LABEL Description="This image is used to start a script that will monitor for events on 345.00 Mhz and send to MQTT server"
 
 # Pull rtl-sdr source code from GIT, compile it and install it
 RUN apk add --no-cache --virtual build-deps alpine-sdk cmake git libusb-dev && \
