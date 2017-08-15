@@ -10,7 +10,8 @@ MAINTAINER Chris Kacerguis
 LABEL Description="This image is used to start a script that will monitor for events on 345.00 Mhz and send to MQTT server"
 
 # Pull rtl-sdr source code from GIT, compile it and install it
-RUN apk add --no-cache build-deps alpine-sdk cmake git libusb-dev && \
+# Pull RTL_433 source code from GIT, compile it and install it
+RUN apk add --no-cache --virtual build-deps alpine-sdk cmake git libusb-dev && \
     mkdir /tmp/src && \
     cd /tmp/src && \
     git clone git://git.osmocom.org/rtl-sdr.git && \
@@ -19,19 +20,18 @@ RUN apk add --no-cache build-deps alpine-sdk cmake git libusb-dev && \
     cmake ../ -DINSTALL_UDEV_RULES=ON -DDETACH_KERNEL_DRIVER=ON -DCMAKE_INSTALL_PREFIX:PATH=/usr/local && \
     make && \
     make install && \
+    chmod +s /usr/local/bin/rtl_* && \
+    cd /tmp/src/ && \
+    git clone https://github.com/merbanan/rtl_433.git && \
+    cd rtl_433/ && \
+    mkdir build && \
+    cd build && \
+    cmake ../ && \
+    make && \
+    make install && \
     apk del build-deps && \
     rm -r /tmp/src && \
-    chmod +s /usr/local/bin/rtl_* && \
     apk add --no-cache libusb
-
-# Pull RTL_433 source code from GIT, compile it and install it
-RUN git clone https://github.com/merbanan/rtl_433.git \
-  && cd rtl_433/ \
-  && mkdir build \
-  && cd build \
-  && cmake ../ \
-  && make \
-  && make install 
 
 # Define an environment variable
 ENV MQTT_HOST=""
