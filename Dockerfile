@@ -1,14 +1,10 @@
 #
-# Docker file to create an image that contains enough software to listen to events on the 433,92 Mhz band,
-# filter these and publish them to a MQTT broker.
+# Docker file to create an image that contains enough software to listen to events on the 345.00 Mhz band,
+# loading the approprate packet decoding for Honeywell RF products; then publish them to a MQTT broker.
 #
-# The script resides in a volume and should be modified to meet your needs.
+# The script resides in a volume and can be modified to meet your needs.
 #
-# The example script filters information from weather stations and publishes the information to topics that
-# Domoticz listens on.
-#
-# Special attention is required to allow the container to access the USB device that is plugged into the host.
-# The container needs priviliged access to /dev/bus/usb on the host.
+# IMPORTANT: The container needs priviliged access to /dev/bus/usb on the host.
 # 
 # docker run --name rtl_433 -d -e MQTT_HOST=<mqtt-broker.example.com> --privileged -v /dev/bus/usb:/dev/bus/usb <image>
 #
