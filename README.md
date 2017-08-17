@@ -30,7 +30,7 @@ sudo docker run --name rtl_433 -d \
 Data to the MQTT server will look like this
 
 ```json
-{"time"' : '"2017-08-17' '13:18:58",' '"model"' : '"Honeywell' Door/Window 'Sensor",' '"id"' : 547651, '"channel"' : 8, '"event"' : 4, '"state"' : '"closed",' '"heartbeat"' : '"yes"}
+{"time" : "2017-08-17' '13:18:58", "model" : "Honeywell' Door/Window 'Sensor", "id" : 547651, "channel" : 8, "event" : 4, "state" : "closed", "heartbeat" : "yes"}
 ```
 
 The default topic is: honeywell/sensors
