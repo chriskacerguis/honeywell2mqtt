@@ -45,7 +45,7 @@ RUN git clone https://github.com/merbanan/rtl_433.git \
 ENV MQTT_HOST=""
 ENV MQTT_USER=""
 ENV MQTT_PASS=""
-ENV MQTT_TOPIC="honeywell/sensors"
+ENV MQTT_TOPIC="homeassistant/sensor/honeywell"
 
 #
 # When running a container this script will be executed
