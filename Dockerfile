@@ -41,24 +41,9 @@ RUN git clone https://github.com/merbanan/rtl_433.git \
 
 #
 # Define environment variables
-# 
-ENV MQTT_HOST=""
-ENV MQTT_USER=""
-ENV MQTT_PASS=""
+#
 ENV MQTT_TOPIC="homeassistant/sensor/honeywell"
 
-#
-# When running a container this script will be executed
-#
-ENTRYPOINT ["/scripts/rtl2mqtt.sh"]
-
-#
-# Copy my script and make it executable
-#
-COPY rtl2mqtt.sh /scripts/rtl2mqtt.sh
-RUN chmod +x /scripts/rtl2mqtt.sh
-
-#
-# The script is in a volume. This makes changes persistent and allows you modify it.
-#
-VOLUME ["/scripts"]
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN ln -s usr/local/bin/docker-entrypoint.sh / # backwards compat
+ENTRYPOINT ["docker-entrypoint.sh"]
