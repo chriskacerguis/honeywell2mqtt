@@ -1,9 +1,8 @@
 # Docker file to create an image that contains enough software to listen to events on the 345.00 Mhz band,
 # loading the approprate packet decoding for Honeywell RF products; then publish them to a MQTT broker.
 # The script resides in a volume and can be modified to meet your needs.
+
 # IMPORTANT: The container needs priviliged access to /dev/bus/usb on the host.
-# docker run --name rtl_433 -d -e MQTT_HOST=<mqtt-broker.example.com> --privileged -v /dev/bus/usb:/dev/bus/usb <image>
-# Optionally you can also pass -e MQTT_USER=username -e MQTT_PASS=password -e MQTT_TOPIC=your/topic/name
 
 FROM ubuntu:16.04
 MAINTAINER Chris Kacerguis
@@ -45,20 +44,3 @@ ENV MQTT_TOPIC=""
 
 COPY rtl2mqtt.sh /
 CMD ["/rtl2mqtt.sh"]
-
-
-#
-# When running a container this script will be executed
-#
-#ENTRYPOINT ["/scripts/rtl2mqtt.sh"]
-
-#
-# Copy my script and make it executable
-#
-#COPY rtl2mqtt.sh /scripts/rtl2mqtt.sh
-#RUN chmod +x /scripts/rtl2mqtt.sh
-
-#
-# The script is in a volume. This makes changes persistent and allows you modify it.
-#
-#VOLUME ["/scripts"]
