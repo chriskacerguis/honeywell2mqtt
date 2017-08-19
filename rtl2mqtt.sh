@@ -8,6 +8,12 @@
 export LANG=C
 PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
 
+echo "Starting Honeywell Listener..."
+echo "Host: $MQTT_HOST"
+echo "User: $MQTT_USER"
+echo "Pass: $MQTT_PASS"
+echo "Topic: $MQTT_TOPIC"
+
 # Start the listener and enter an endless loop
 /usr/local/bin/rtl_433 -f 345000000 -F json -R 70 -U | while read line
 do
