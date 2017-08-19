@@ -42,10 +42,15 @@ ENV MQTT_HOST=""
 ENV MQTT_USER=""
 ENV MQTT_PASS=""
 ENV MQTT_TOPIC=""
+
+COPY rtl2mqtt.sh /
+CMD ["/rtl2mqtt.sh"]
+
+
 #
 # When running a container this script will be executed
 #
-ENTRYPOINT ["/scripts/rtl2mqtt.sh"]
+#ENTRYPOINT ["/scripts/rtl2mqtt.sh"]
 
 #
 # Copy my script and make it executable
