@@ -2,8 +2,10 @@
 
 # A simple script that will receive events from a RTL433 SDR
 # It is tuned to listen to 345.00 MHz with the Honeywell driver
-#
+
 # Author: Chris Kacerguis <chriskacerguis@gmail.com>
+
+set -x
 
 export LANG=C
 PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"

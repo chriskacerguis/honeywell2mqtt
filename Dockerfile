@@ -1,13 +1,8 @@
-#
 # Docker file to create an image that contains enough software to listen to events on the 345.00 Mhz band,
 # loading the approprate packet decoding for Honeywell RF products; then publish them to a MQTT broker.
-#
 # The script resides in a volume and can be modified to meet your needs.
-#
 # IMPORTANT: The container needs priviliged access to /dev/bus/usb on the host.
-# 
 # docker run --name rtl_433 -d -e MQTT_HOST=<mqtt-broker.example.com> --privileged -v /dev/bus/usb:/dev/bus/usb <image>
-#
 # Optionally you can also pass -e MQTT_USER=username -e MQTT_PASS=password -e MQTT_TOPIC=your/topic/name
 
 FROM ubuntu:16.04
@@ -40,13 +35,13 @@ RUN git clone https://github.com/merbanan/rtl_433.git \
   && make install 
 
 #
-# Define environment variables
+# Define an environment variable
 # 
-ENV MQTT_HOST="127.0.0.1"
-ENV MQTT_USER="guest"
-ENV MQTT_PASS="guest"
-ENV MQTT_TOPIC="homeassistant/sensor/honeywell"
-
+# Use this variable when creating a container to specify the MQTT broker host.
+ENV MQTT_HOST=""
+ENV MQTT_USER=""
+ENV MQTT_PASS=""
+ENV MQTT_TOPIC=""
 #
 # When running a container this script will be executed
 #
@@ -55,10 +50,10 @@ ENTRYPOINT ["/scripts/rtl2mqtt.sh"]
 #
 # Copy my script and make it executable
 #
-COPY rtl2mqtt.sh /scripts/rtl2mqtt.sh
-RUN chmod +x /scripts/rtl2mqtt.sh
+#COPY rtl2mqtt.sh /scripts/rtl2mqtt.sh
+#RUN chmod +x /scripts/rtl2mqtt.sh
 
 #
 # The script is in a volume. This makes changes persistent and allows you modify it.
 #
-VOLUME ["/scripts"]
+#VOLUME ["/scripts"]
