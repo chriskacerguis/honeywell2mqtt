@@ -37,10 +37,10 @@ RUN git clone https://github.com/merbanan/rtl_433.git \
 # Define an environment variable
 # 
 # Use this variable when creating a container to specify the MQTT broker host.
-ENV MQTT_HOST=""
-ENV MQTT_USER=""
-ENV MQTT_PASS=""
-ENV MQTT_TOPIC=""
+ENV MQTT_HOST="localhost"
+ENV MQTT_USER="guest"
+ENV MQTT_PASS="guest"
+ENV MQTT_TOPIC="homeassistant/sensor/honeywell"
 
 COPY rtl2mqtt.sh /
 CMD ["/rtl2mqtt.sh"]

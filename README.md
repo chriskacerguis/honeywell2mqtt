@@ -9,20 +9,20 @@ To run the container, use the following:
 ```
 sudo docker run --name rtl_433 -d \
 -e MQTT_HOST=<mqtt-broker.example.com> \
---privileged -v /dev/bus/usb:/dev/bus/usb \
---name honeywell2mqtt chriskacerguis/honeywell2mqtt
-```
-
-Optionally, you can pass in the MQTT username, password, and topic using the following:
-
-```
-sudo docker run --name rtl_433 -d \
--e MQTT_HOST=<mqtt-broker.example.com> \
 -e MQTT_USER=username \
 -e MQTT_PASS=password \
 -e MQTT_TOPIC=your/topic/name \
---privileged -v /dev/bus/usb:/dev/bus/usb \
+--privileged --device /dev/sdr:/dev/sdr \
 --name honeywell2mqtt chriskacerguis/honeywell2mqtt
+```
+I would highly suggest you set a static device name for your USB SDR (the below will work for the)
+
+Create (or append if it exists): ```/etc/udev/rules.d/99-usb-serial.rules```
+
+Add the following:
+
+```
+ACTION=="add", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="2838", SYMLINK+="sdr"
 ```
 
 ## MQTT Data
@@ -30,10 +30,18 @@ sudo docker run --name rtl_433 -d \
 Data to the MQTT server will look like this
 
 ```json
-{"time" : "2017-08-17' '13:18:58", "model" : "Honeywell' Door/Window 'Sensor", "id" : 547651, "channel" : 8, "event" : 4, "state" : "closed", "heartbeat" : "yes"}
+{
+    "time" : "2017-08-17' '13:18:58", 
+    "model" : "Honeywell' Door/Window 'Sensor", 
+    "id" : 547651, 
+    "channel" : 8, 
+    "event" : 4, 
+    "state" : "closed", 
+    "heartbeat" : "yes"
+}
 ```
 
-**The default topic is:** homeassistant/sensor/honeywell
+**The default topic is:** ```homeassistant/sensor/honeywell```
 
 ## Hardware
 
@@ -44,3 +52,18 @@ This has been tested and used with the following hardware (you can get it on Ama
 - NooElec NESDR Nano 2+ Tiny Black RTL-SDR USB
 
 It should work just fine with any Honeywell RF sensors.
+
+
+## Troubleshooting
+
+If you see this error:
+
+> Kernel driver is active, or device is claimed by second instance of librtlsdr.
+> In the first case, please either detach or blacklist the kernel module
+> (dvb_usb_rtl28xxu), or enable automatic detaching at compile time.
+
+Then run the following command on the host
+
+```bash
+sudo rmmod dvb_usb_rtl28xxu rtl2832
+```
