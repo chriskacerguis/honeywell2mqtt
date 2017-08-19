@@ -13,9 +13,5 @@ PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
 do
   # Create file with touch /tmp/rtl_433.log if logging is needed
   [ -w /tmp/rtl_433.log ] && echo $line >> rtl_433.log
-  if [ -z "$MQTT_USER" ]; then
-    echo $line | /usr/bin/mosquitto_pub -h $MQTT_HOST -u $MQTT_USER -P $MQTT_PASS -r -l -t $MQTT_TOPIC
-  else
-    echo $line | /usr/bin/mosquitto_pub -h $MQTT_HOST -r -l -t $MQTT_TOPIC
-  fi
+  echo $line | /usr/bin/mosquitto_pub -h $MQTT_HOST -u $MQTT_USER -P $MQTT_PASS -r -l -t $MQTT_TOPIC
 done
