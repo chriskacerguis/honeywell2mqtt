@@ -12,17 +12,8 @@ sudo docker run --name rtl_433 -d \
 -e MQTT_USER=username \
 -e MQTT_PASS=password \
 -e MQTT_TOPIC=your/topic/name \
---privileged --device /dev/sdr:/dev/sdr \
+--privileged -v /dev/bus/usb:/dev/bus/usb \
 --name honeywell2mqtt chriskacerguis/honeywell2mqtt
-```
-I would highly suggest you set a static device name for your USB SDR (the below will work for the)
-
-Create (or append if it exists): ```/etc/udev/rules.d/99-usb-serial.rules```
-
-Add the following:
-
-```
-ACTION=="add", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="2838", SYMLINK+="sdr"
 ```
 
 ## MQTT Data
@@ -31,8 +22,8 @@ Data to the MQTT server will look like this
 
 ```json
 {
-    "time" : "2017-08-17' '13:18:58", 
-    "model" : "Honeywell' Door/Window 'Sensor", 
+    "time" : "2017-08-17 13:18:58", 
+    "model" : "Honeywell Door/Window Sensor", 
     "id" : 547651, 
     "channel" : 8, 
     "event" : 4, 
