@@ -32,7 +32,7 @@ RUN apk add --no-cache --virtual build-deps alpine-sdk cmake git libusb-dev && \
     make install && \
     apk del build-deps && \
     rm -r /tmp/src && \
-    apk add --no-cache libusb
+    apk add --no-cache libusb mosquitto-clients
 
 #
 # Define an environment variable
