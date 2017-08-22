@@ -42,7 +42,7 @@ This has been tested and used with the following hardware (you can get it on Ama
 - 5800MINI Wireless Door/Window Contact by Honeywell
 - NooElec NESDR Nano 2+ Tiny Black RTL-SDR USB
 
-It should work just fine with any Honeywell RF sensors.
+However, it should work just fine with any Honeywell RF sensors transmitting on 345Mhz.
 
 
 ## Troubleshooting
