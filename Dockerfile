@@ -43,5 +43,6 @@ ENV MQTT_USER="guest"
 ENV MQTT_PASS="guest"
 ENV MQTT_TOPIC="homeassistant/sensor/honeywell"
 
-COPY rtl2mqtt.sh /
-CMD ["/rtl2mqtt.sh"]
+COPY ./rtl2mqtt.sh /
+RUN chmod +x /rtl2mqtt.sh
+ENTRYPOINT ["/rtl2mqtt.sh"]
