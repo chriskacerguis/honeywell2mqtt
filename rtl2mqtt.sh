@@ -15,7 +15,7 @@ touch /tmp/rtl_433.log
 # Start the listener and enter an endless loop
 echo "Starting RTL..."
 #/usr/local/bin/rtl_433 -f 345000000 -F json -R 70 | while read line
-/usr/local/bin/rtl_433 -a | while read line
+/usr/local/bin/rtl_433 -G -ppm 25 | while read line
 do
   # Create file with touch /tmp/rtl_433.log if logging is needed
   [ -w /tmp/rtl_433.log ] && echo $line >> rtl_433.log
