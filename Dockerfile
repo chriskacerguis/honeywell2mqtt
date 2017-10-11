@@ -36,7 +36,7 @@ RUN apk add --no-cache --virtual build-deps alpine-sdk cmake git libusb-dev && \
 
 #
 # Define an environment variable
-# 
+#
 # Use this variable when creating a container to specify the MQTT broker host.
 ENV MQTT_HOST="localhost"
 ENV MQTT_USER="guest"
@@ -45,4 +45,5 @@ ENV MQTT_TOPIC="homeassistant/sensor/honeywell"
 
 COPY ./rtl2mqtt.sh /
 RUN chmod +x /rtl2mqtt.sh
-ENTRYPOINT ["/rtl2mqtt.sh"]
+#ENTRYPOINT ["/rtl2mqtt.sh"]
+ENTRYPOINT ["/usr/local/bin/rtl_433"]
