@@ -4,46 +4,29 @@
 
 # IMPORTANT: The container needs priviliged access to /dev/bus/usb on the host.
 
-FROM alpine:3.6
-MAINTAINER Chris Kacerguis
+FROM sysrun/rpi-rtl_433
+MAINTAINER James Fry
 
-LABEL Description="This image is used to start a script that will monitor for Honeywell Sensors events on 345.00 Mhz and send the data to an MQTT server"
+LABEL Description="This image is used to start a script that will monitor for Current Cost Sensors events on 433.00 Mhz and send the data to an MQTT server"
 
 #
-# First install software packages needed to compile rtl_433 and to publish MQTT events
+# First install software packages needed to publish MQTT events
 #
-RUN apk add --no-cache --virtual build-deps alpine-sdk cmake git libusb-dev && \
-    mkdir /tmp/src && \
-    cd /tmp/src && \
-    git clone git://git.osmocom.org/rtl-sdr.git && \
-    mkdir /tmp/src/rtl-sdr/build && \
-    cd /tmp/src/rtl-sdr/build && \
-    cmake ../ -DINSTALL_UDEV_RULES=ON -DDETACH_KERNEL_DRIVER=ON -DCMAKE_INSTALL_PREFIX:PATH=/usr/local && \
-    make && \
-    make install && \
-    chmod +s /usr/local/bin/rtl_* && \
-    cd /tmp/src/ && \
-    git clone https://github.com/merbanan/rtl_433.git && \
-    cd rtl_433/ && \
-    mkdir build && \
-    cd build && \
-    cmake ../ && \
-    make && \
-    make install && \
-    apk del build-deps && \
-    rm -r /tmp/src && \
-    apk add --no-cache libusb mosquitto-clients
+RUN apt-get update
+    apt-get install mosquitto-clients -y
+
+
 
 #
 # Define an environment variable
 #
 # Use this variable when creating a container to specify the MQTT broker host.
-ENV MQTT_HOST="localhost"
+ENV MQTT_HOST="hassio.local:1883"
 ENV MQTT_USER="guest"
 ENV MQTT_PASS="guest"
-ENV MQTT_TOPIC="homeassistant/sensor/honeywell"
+ENV MQTT_TOPIC="homeassistant/sensor/currentcost"
 
 COPY ./rtl2mqtt.sh /
 RUN chmod +x /rtl2mqtt.sh
-#ENTRYPOINT ["/rtl2mqtt.sh"]
-ENTRYPOINT ["/usr/local/bin/rtl_433"]
+ENTRYPOINT ["/rtl2mqtt.sh"]
+#ENTRYPOINT ["/usr/local/bin/rtl_433"]
