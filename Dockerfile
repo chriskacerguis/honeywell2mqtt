@@ -4,7 +4,7 @@
 
 # IMPORTANT: The container needs priviliged access to /dev/bus/usb on the host.
 
-FROM sysrun/rpi-rtl_433
+FROM sysrun/rtl_433
 MAINTAINER James Fry
 
 LABEL Description="This image is used to start a script that will monitor for Current Cost Sensors events on 433.00 Mhz and send the data to an MQTT server"
