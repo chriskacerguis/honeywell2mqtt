@@ -12,10 +12,8 @@ LABEL Description="This image is used to start a script that will monitor for Cu
 #
 # First install software packages needed to publish MQTT events
 #
-RUN apt-get update
+RUN apt-get update && \
     apt-get install mosquitto-clients -y
-
-
 
 #
 # Define an environment variable
