@@ -1,0 +1,23 @@
+{
+  "name": "honeywell2mqtt",
+  "version": "1.0.0",
+  "description": "Sends events from rtl_433 to MQTT server",
+  "main": "send.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chriskacerguis/honeywell2mqtt.git"
+  },
+  "author": "Chris Kacerguis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chriskacerguis/honeywell2mqtt/issues"
+  },
+  "homepage": "https://github.com/chriskacerguis/honeywell2mqtt#readme",
+  "dependencies": {
+    "commander": "^2.15.1",
+    "mqtt": "^2.17.0"
+  }
+}

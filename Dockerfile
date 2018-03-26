@@ -2,17 +2,17 @@
 # loading the approprate packet decoding for Honeywell RF products; then publish them to a MQTT broker.
 # The script resides in a volume and can be modified to meet your needs.
 
-# IMPORTANT: The container needs priviliged access to /dev/bus/usb on the host.
+# IMPORTANT: The container needs priviliged access or access to /dev/bus/usb on the host.
 
-FROM alpine:3.6
-MAINTAINER Chris Kacerguis
+FROM node:9-alpine
+LABEL maintainer="Chris Kacerguis <chris@fuzzyblender.com>"
 
-LABEL Description="This image is used to start a script that will monitor for Honeywell Sensors events on 345.00 Mhz and send the data to an MQTT server"
+LABEL Description="This image will monitor for Honeywell Sensors message at 345.00 Mhz and send the data to an MQTT server"
 
 #
 # First install software packages needed to compile rtl_433 and to publish MQTT events
 #
-RUN apk add --no-cache --virtual build-deps alpine-sdk cmake git libusb-dev && \
+RUN apk add --no-cache --virtual build-deps alpine-sdk cmake git libusb-dev libusb mosquitto-clients && \
     mkdir /tmp/src && \
     cd /tmp/src && \
     git clone git://git.osmocom.org/rtl-sdr.git && \
@@ -31,18 +31,12 @@ RUN apk add --no-cache --virtual build-deps alpine-sdk cmake git libusb-dev && \
     make && \
     make install && \
     apk del build-deps && \
-    rm -r /tmp/src && \
-    apk add --no-cache libusb mosquitto-clients
+    rm -r /tmp/src
 
-#
-# Define an environment variable
-# 
-# Use this variable when creating a container to specify the MQTT broker host.
-ENV MQTT_HOST="localhost"
-ENV MQTT_USER="guest"
-ENV MQTT_PASS="guest"
-ENV MQTT_TOPIC="homeassistant/sensor/honeywell"
+WORKDIR /app
 
-COPY ./rtl2mqtt.sh /
-RUN chmod +x /rtl2mqtt.sh
-ENTRYPOINT ["/rtl2mqtt.sh"]
+COPY package*.json ./
+RUN npm install
+COPY . /app
+
+ENTRYPOINT ["listen.sh"]
