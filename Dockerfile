@@ -12,7 +12,7 @@ LABEL Description="This image will monitor for Honeywell Sensors message at 345.
 #
 # First install software packages needed to compile rtl_433 and to publish MQTT events
 #
-RUN apk add --no-cache --virtual build-deps alpine-sdk cmake git libusb-dev libusb mosquitto-clients && \
+RUN apk add --no-cache --virtual build-deps alpine-sdk cmake git libusb-dev && \
     mkdir /tmp/src && \
     cd /tmp/src && \
     git clone git://git.osmocom.org/rtl-sdr.git && \
@@ -31,7 +31,8 @@ RUN apk add --no-cache --virtual build-deps alpine-sdk cmake git libusb-dev libu
     make && \
     make install && \
     apk del build-deps && \
-    rm -r /tmp/src
+    rm -r /tmp/src && \
+    apk add --no-cache libusb mosquitto-clients
 
 WORKDIR /app
 
