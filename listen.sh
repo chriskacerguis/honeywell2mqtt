@@ -14,5 +14,5 @@ PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
 echo "Starting RTL..."
 /usr/local/bin/rtl_433 -f 345000000 -F json -R 70 | while read line
 do
-  node /send.js -p "$line"
+  node /app/send.js -p "$line"
 done
