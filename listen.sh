@@ -3,7 +3,7 @@
 # A simple script that will receive events from a RTL433 SDR
 # It is tuned to listen to 345.00 MHz with the Honeywell driver
 
-# Author: Chris Kacerguis <chriskacerguis@gmail.com>
+# Author: Chris Kacerguis <chris@fuzzyblender.com>
 
 set -x
 
