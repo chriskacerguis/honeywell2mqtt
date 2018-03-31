@@ -1,19 +1,15 @@
 # honeywell2mqtt
 A Docker image for a software defined radio tuned to listen for Honeywell RF security sensors at 345Mhz.  This is based off of Marco Verleun's 
-awesome rtl2mqtt image, but adpated just for Honeywell products (and working with Home Assistant)
+awesome rtl2mqtt image, but adpated just for Honeywell products and made to work with Home Assistant
 
 ## Usage
 
 To run the container, use the following:
 
 ```
-sudo docker run --name rtl_433 -d \
+sudo docker run --name honeywell2mqtt -d \
 -e MQTT_HOST=<mqtt-broker.example.com> \
--e MQTT_USER=username \
--e MQTT_PASS=password \
--e MQTT_TOPIC=your/topic/name \
---privileged -v /dev/bus/usb:/dev/bus/usb \
---name honeywell2mqtt chriskacerguis/honeywell2mqtt
+--privileged chriskacerguis/honeywell2mqtt
 ```
 
 ## MQTT Data
@@ -32,7 +28,11 @@ Data to the MQTT server will look like this
 }
 ```
 
-**The default topic is:** ```homeassistant/sensor/honeywell```
+## MQTT Topic
+
+Messages will be posted to the topic home/sensor/[id] 
+
+Where [id] is the sensor id from the packet
 
 ## Hardware
 
