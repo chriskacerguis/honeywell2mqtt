@@ -30,7 +30,7 @@ client.on('connect', function () {
 
   // Send the discovery message
   let configPayload = `{"name": "${fName}", "uniq_id": "${packet.id}", "stat_t": "${baseTopic}/state", "qos": 1, "pl_on": "open", "pl_off": "closed", "dev_cla": "opening"}`
-  client.publish(`${baseTopic}/config`, configPayload)
+  client.publish(`${baseTopic}/config`, configPayload, {qos: 1, retain: true})
 
   console.log(`T: ${baseTopic}/config`)
   console.log(`P: ${configPayload}`)
