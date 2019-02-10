@@ -25,12 +25,18 @@ client.on('connect', function () {
     fName = jsonNameMap[packet.id]
   }
 
+  // Set base topic
+  let baseTopic = `${discoveryPrefix}/binary_sensor/${packet.id}`
+
   // Send the discovery message
-  let configTopic = `${discoveryPrefix}/binary_sensor/${packet.id}/state`
-  let configPayload = `{"name": "${fName},"stat_t": "${configTopic}","qos": 1,"pl_on": "open","pl_off": "closed","dev_cla": "opening"}`
-  client.publish(`${discoveryPrefix}/binary_sensor/${packet.id}/config`, configPayload)
-  
-  let stateTopic = `${discoveryPrefix}/binary_sensor/${packet.id}/state`
-  client.publish(stateTopic, packet.state, {qos: 1, retain: true})
+  let configPayload = `{"name": "${fName}", "stat_t": "${baseTopic}/state", "qos": 1, "pl_on": "open", "pl_off": "closed", "dev_cla": "opening"}`
+  client.publish(`${baseTopic}/config`, configPayload)
+
+  console.log(`T: ${baseTopic}/config`)
+  console.log(`P: ${configPayload}`)
+  console.log('--')
+  client.publish(`${baseTopic}/state`, packet.state, {qos: 1, retain: true})
+  console.log(`T: ${baseTopic}/state`)
+  console.log(`P: ${packet.state}`)
   client.end()
 })
