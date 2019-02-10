@@ -20,7 +20,7 @@ client.on('connect', function () {
   let packet = JSON.parse(program.packet)
 
   // See if there is a name map
-  var fName = 'MQTT Binary sensor'
+  var fName = `Honeywell ${packet.id}`
   if(jsonNameMap.hasOwnProperty(packet.id)){
     fName = jsonNameMap[packet.id]
   }
@@ -29,7 +29,7 @@ client.on('connect', function () {
   let baseTopic = `${discoveryPrefix}/binary_sensor/${packet.id}`
 
   // Send the discovery message
-  let configPayload = `{"name": "${fName}", "stat_t": "${baseTopic}/state", "qos": 1, "pl_on": "open", "pl_off": "closed", "dev_cla": "opening"}`
+  let configPayload = `{"name": "${fName}", "uniq_id": "${packet.id}", "stat_t": "${baseTopic}/state", "qos": 1, "pl_on": "open", "pl_off": "closed", "dev_cla": "opening"}`
   client.publish(`${baseTopic}/config`, configPayload)
 
   console.log(`T: ${baseTopic}/config`)
