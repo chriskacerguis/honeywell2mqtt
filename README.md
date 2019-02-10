@@ -1,6 +1,6 @@
 # honeywell2mqtt
 A Docker image for a software defined radio tuned to listen for Honeywell RF security sensors at 345Mhz.  This is based off of Marco Verleun's 
-awesome rtl2mqtt image, but adpated just for Honeywell products and made to work with Home Assistant
+awesome rtl2mqtt image, but adpated just for Honeywell products and made to work with Home Assistant and MQTT Discovery.
 
 ## Usage
 
@@ -12,27 +12,28 @@ sudo docker run --name honeywell2mqtt -d \
 --privileged chriskacerguis/honeywell2mqtt
 ```
 
-## MQTT Data
+## Name Mapping (OPTIONAL)
 
-Data to the MQTT server will look like this
+By default you the system will not set a friendlt name, and it will simply default to "MQTT Binary Sensor".  You can mount a map.json file will an ID to name map, and the friendly name will be set to the value.  Here is an example:
 
 ```json
 {
-    "time" : "2017-08-17 13:18:58", 
-    "model" : "Honeywell Door/Window Sensor", 
-    "id" : 547651, 
-    "channel" : 8, 
-    "event" : 4, 
-    "state" : "closed", 
-    "heartbeat" : "yes"
+    "648705": "Front Door",
+    "648653": "Back Door"
 }
 ```
 
-## MQTT Topic
+Simple add the following line to the docker run command above:
 
-Messages will be posted to the topic home/sensor/[id] 
+```sh
+-v ${pwd}/map.json:/app/map.json
+```
 
-Where [id] is the sensor id from the packet
+## MQTT Topics
+
+States will be posted to the topic homeassistant/binary_sensor/[id]/state
+
+Where [id] is the sensor id from the each device
 
 ## Hardware
 
