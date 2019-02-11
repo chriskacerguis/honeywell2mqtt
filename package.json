@@ -1,10 +1,10 @@
 {
   "name": "honeywell2mqtt",
-  "version": "1.0.0",
-  "description": "Sends events from rtl_433 to MQTT server",
+  "version": "3.0.0",
+  "description": "Software defined radio tuned to listen for Honeywell RF security sensors at 345Mhz",
   "main": "send.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: this app has no tests...bad dev, no donut!\" && exit 1"
   },
   "repository": {
     "type": "git",

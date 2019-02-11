@@ -5,7 +5,7 @@ const mqtt = require('mqtt')
 const fs = require('fs')
 
 program
-  .version('0.2.0')
+  .version('3.0.0')
   .option('-p, --packet <item>', 'JSON packet data (as string)')
   .parse(process.argv)
 
