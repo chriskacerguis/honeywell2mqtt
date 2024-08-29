@@ -4,9 +4,7 @@
 
 # IMPORTANT: The container needs priviliged access or access to /dev/bus/usb on the host.
 
-FROM node:11-alpine
-LABEL maintainer="Chris Kacerguis <chris@fuzzyblender.com>"
-
+FROM node:22-alpine
 LABEL Description="This image will monitor for Honeywell Sensors message at 345.00 Mhz and send the data to an MQTT server"
 
 #
