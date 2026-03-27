@@ -19,6 +19,6 @@
   "dependencies": {
     "commander": "^2.15.1",
     "fs": "0.0.1-security",
-    "mqtt": "^4.3.7"
+    "mqtt": "^5.15.1"
   }
 }
